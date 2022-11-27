@@ -1,21 +1,26 @@
 import React from "react";
 import Logo from "./img/logo.png";
 import Avatar from "./img/avatar.png";
-
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "../firebase.config";
-
 import { MdShoppingBasket } from "react-icons/md";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useStateValue } from "./context/StateProvider";
+import { actionType } from "./context/reducer";
 
 export const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  const login = () => {
-    const response = signInWithPopup(firebaseAuth, provider);
-    console.log(response);
+  const [{user}, dispatch] = useStateValue()
+
+  const login = async () => {
+    const {user : {refreshToken, providerData}} = await signInWithPopup(firebaseAuth, provider);
+    dispatch({
+      type: actionType.SET_USER,
+      user: providerData[0]
+    })
   };
 
   return (
