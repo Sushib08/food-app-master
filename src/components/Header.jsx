@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Logo from "./img/logo.png";
-import Avatar from "./img/avatar.png";
+import Logo from "../img/logo.png";
+import Avatar from "../img/avatar.png";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "../firebase.config";
 import { MdShoppingBasket, MdAdd, MdLogout } from "react-icons/md";
