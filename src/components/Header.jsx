@@ -186,6 +186,7 @@ export const Header = () => {
                   className=" text-base text-textColor  hover:bg-slate-200 
                 hover:text-headingColor duration-100 transition-all ease-in-out 
                 cursor-pointer"
+                onClick={() => setIsMenu(false)}
                 >
                   Home
                 </li>
@@ -193,6 +194,7 @@ export const Header = () => {
                   className=" text-base text-textColor  hover:bg-slate-200 
                 hover:text-headingColor duration-100 transition-all ease-in-out 
                 cursor-pointer"
+                onClick={() => setIsMenu(false)}
                 >
                   Menu
                 </li>
@@ -200,6 +202,7 @@ export const Header = () => {
                   className=" text-base text-textColor  hover:bg-slate-200 
                 hover:text-headingColor duration-100 transition-all ease-in-out 
                 cursor-pointer"
+                onClick={() => setIsMenu(false)}
                 >
                   A propos de nous
                 </li>
@@ -207,6 +210,7 @@ export const Header = () => {
                   className=" text-base text-textColor  hover:bg-slate-200 
                 hover:text-headingColor duration-100 transition-all ease-in-out 
                 cursor-pointer"
+                onClick={() => setIsMenu(false)}
                 >
                   Service
                 </li>
