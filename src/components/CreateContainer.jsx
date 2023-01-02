@@ -10,6 +10,16 @@ import {
 } from "react-icons/md";
 import { categories } from "../utils/data";
 import Loader from "./Loader";
+import { storage } from "../firebase.config";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { getAllFoodItems, saveItem } from "../utils/firebaseFunctions";
+import { actionType } from "./context/reducer";
+import { useStateValue } from "./context/StateProvider";
 
 export const CreateContainer = () => {
   const [title, setTitle] = useState("");
@@ -21,12 +31,119 @@ export const CreateContainer = () => {
   const [alertStatus, setAlertStatus] = useState("danger");
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [{ foodItems }, dispatch] = useStateValue();
 
-  const uploadImage = () => {};
+  const uploadImage = (e) => {
+    setIsLoading(true);
+    const imageFile = e.target.files[0];
+    const storageRef = ref(storage, `Images/${Date.now()}-${imageFile.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
-  const deleteImage = () => {};
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const uploadProgress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      },
+      (error) => {
+        console.log(error);
+        setFields(true);
+        setMsg("Erreur de téléchargerment : Réessayer 🙇");
+        setAlertStatus("danger");
+        setTimeout(() => {
+          setFields(false);
+          setIsLoading(false);
+        }, 4000);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageAsset(downloadURL);
+          setIsLoading(false);
+          setFields(true);
+          setMsg("Image Télécharger avec succès 😊");
+          setAlertStatus("success");
+          setTimeout(() => {
+            setFields(false);
+          }, 4000);
+        });
+      }
+    );
+  };
 
-  const saveDetails = () => {};
+  const deleteImage = () => {
+    setIsLoading(true);
+    const deleteRef = ref(storage, imageAsset);
+    deleteObject(deleteRef).then(() => {
+      setImageAsset(null);
+      setIsLoading(false);
+      setFields(true);
+      setMsg("Image supprimer avec succès 😊");
+      setAlertStatus("success");
+      setTimeout(() => {
+        setFields(false);
+      }, 4000);
+    });
+  };
+
+  const saveDetails = () => {
+    setIsLoading(true);
+    try {
+      if (!title || !calories || !imageAsset || !price || !category) {
+        setFields(true);
+        setMsg("Les champs doivent être remplis");
+        setAlertStatus("danger");
+        setTimeout(() => {
+          setFields(false);
+          setIsLoading(false);
+        }, 4000);
+      } else {
+        const data = {
+          id: `${Date.now()}`,
+          title: title,
+          imageURL: imageAsset,
+          category: category,
+          qty: 1,
+          price: price,
+        };
+        saveItem(data);
+        setFields(true);
+        setMsg("Données téléchargés avec succès 🙇");
+        clearData();
+        setAlertStatus("success");
+        setTimeout(() => {
+          setFields(false);
+          setIsLoading(false);
+        }, 4000);
+      }
+    } catch (error) {
+      console.log(error);
+      setFields(true);
+      setMsg("Erreur de téléchargerment : Réessayer 🙇");
+      setAlertStatus("danger");
+      setTimeout(() => {
+        setFields(false);
+      }, 4000);
+    }
+
+    fetchData();
+  };
+
+  const clearData = () => {
+    setTitle("");
+    setImageAsset(null);
+    setCalories("");
+    setPrice("");
+    setCalories("Sélectionner une catégorie");
+  };
+
+  const fetchData = async () => {
+    await getAllFoodItems().then((data) => {
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+        foodItems: data,
+      });
+    });
+  };
 
   return (
     <div className=" w-full min-h-screen flex items-center justify-center">
@@ -70,7 +187,7 @@ export const CreateContainer = () => {
             cursor-pointer"
           >
             <option value="other" className=" bg-white">
-              Sélectionne une catégorie
+              Sélectionner une catégorie
             </option>
             {categories &&
               categories.map((item) => (
@@ -85,46 +202,47 @@ export const CreateContainer = () => {
           </select>
         </div>
 
-        <div
-          className=" group flex justify-center items-center flex-col border-2 border-dotted 
-        border-gray-300 w-full h-225 md:h-420 cursor-pointer rounded-lg"
-        >
-          {isLoading ? <Loader /> : <></>}
-          {!imageAsset ? (
-            <>
-              <label className=" w-full h-full flex flex-col items-center justify-center cursor-pointer">
-                <div className=" w-full h-full flex flex-col items-center justify-center gap-2">
-                  <MdCloudUpload className=" text-gray-500 text-3xl hover:text-gray-700" />
-                  <p className=" text-gray-500 hover:text-gray-700">
-                    Clique ici pour télécharger
-                  </p>
-                </div>
-                <input
-                  type="file"
-                  name="uploadimage"
-                  accept="image/*"
-                  onChange={uploadImage}
-                  className=" w-0 h-0"
-                />
-              </label>
-            </>
+        <div className="group flex justify-center items-center flex-col border-2 border-dotted border-gray-300 w-full h-225 md:h-340 cursor-pointer rounded-lg">
+          {isLoading ? (
+            <Loader />
           ) : (
             <>
-              <div className=" relative h-full">
-                <img
-                  src={imageAsset}
-                  alt="uploaded image"
-                  className=" w-full h-full object-cover"
-                />
-                <button
-                  type="button"
-                  className=" absolute bottom-3 right-3 p-3 rounded-full bg-gray-500 text-xl cursor-pointer 
-                  outline-none hover:shadow-md duration-500 transition-all ease-in-out"
-                  onClick={deleteImage}
-                >
-                  <MdDelete className=" text-white" />
-                </button>
-              </div>
+              {!imageAsset ? (
+                <>
+                  <label className="w-full h-full flex flex-col items-center justify-center cursor-pointer">
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+                      <MdCloudUpload className="text-gray-500 text-3xl hover:text-gray-700" />
+                      <p className="text-gray-500 hover:text-gray-700">
+                        Cliquer ici pour télécharger l'image
+                      </p>
+                    </div>
+                    <input
+                      type="file"
+                      name="uploadimage"
+                      accept="image/*"
+                      onChange={uploadImage}
+                      className="w-0 h-0"
+                    />
+                  </label>
+                </>
+              ) : (
+                <>
+                  <div className="relative h-full">
+                    <img
+                      src={imageAsset}
+                      alt="uploaded image"
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      className="absolute bottom-3 right-3 p-3 rounded-full bg-red-500 text-xl cursor-pointer outline-none hover:shadow-md  duration-500 transition-all ease-in-out"
+                      onClick={deleteImage}
+                    >
+                      <MdDelete className="text-white" />
+                    </button>
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
@@ -163,7 +281,9 @@ export const CreateContainer = () => {
             className=" ml-0 md:ml-auto w-full md:w-auto border-none outline-none bg-emerald-500 
             px-12 py-2 rounded-lg text-lg text-white font-semibold"
             onClick={saveDetails}
-          >Sauvegarder</button>
+          >
+            Sauvegarder
+          </button>
         </div>
       </div>
     </div>
