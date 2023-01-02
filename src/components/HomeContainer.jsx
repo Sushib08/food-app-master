@@ -65,8 +65,8 @@ export const HomeContainer = () => {
           alt="hero-Bg"
         />
 
-        <div className=" w-full h-full absolute top-0 left-0 flex items-center justify-center 
-        xl:px-32 py-4 gap-4 flex-wrap">
+        <div className=" w-full h-full absolute top-0 left-0 flex items-center justify-center
+        xl:px-16 py-4 gap-4 flex-wrap">
           {heroData &&
             heroData.map((items) => (
               <div
