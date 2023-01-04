@@ -2,7 +2,7 @@ import I1 from "../img/i1.png";
 import F1 from "../img/f1.png";
 import C3 from "../img/c3.png";
 import Fi1 from "../img/fi1.png";
-import { IoFishSharp } from "react-icons/io5";
+import { IoFishSharp, IoConstruct } from "react-icons/io5";
 import { IoMdIceCream } from "react-icons/io";
 import {
   GiBananaBunch,
@@ -86,5 +86,11 @@ export const categories = [
     name: "Boissons",
     urlParamName: "drinks",
     icons: <GiSodaCan />
+  },
+  {
+    id: 7,
+    name: "Test",
+    urlParamName: "construction",
+    icons: <IoConstruct />
   },
 ];
