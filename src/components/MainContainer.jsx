@@ -7,6 +7,7 @@ import { useStateValue } from "./context/StateProvider";
 import { useState } from "react";
 import { useEffect } from "react";
 import { MenuContainer } from "./MenuContainer";
+import { CartContainer } from "./CartContainer";
 
 export const MainContainer = () => {
   const [{ foodItems }, dispatch] = useStateValue();
@@ -32,7 +33,7 @@ export const MainContainer = () => {
               whileTap={{ scale: 0.75 }}
               className=" w-8 h-8 rounded-lg bg-orange-300 hover:bg-orange-500 cursor-pointer transition-all duration-100 ease-in-out hover:shadow-lg 
               flex items-center justify-center"
-              onClick={() => setScrollValue(prevValue => prevValue - 200) }
+              onClick={() => setScrollValue((prevValue) => prevValue - 200)}
             >
               <MdChevronLeft className=" text-lg text-white" />
             </motion.div>
@@ -40,7 +41,7 @@ export const MainContainer = () => {
               whileTap={{ scale: 0.75 }}
               className=" w-8 h-8 rounded-lg bg-orange-300 hover:bg-orange-500 cursor-pointer transition-all duration-100 ease-in-out hover:shadow-lg 
               flex items-center justify-center"
-              onClick={() => setScrollValue(prevValue => prevValue + 200) }
+              onClick={() => setScrollValue((prevValue) => prevValue + 200)}
             >
               <MdChevronRight className=" text-lg text-white" />
             </motion.div>
@@ -56,6 +57,8 @@ export const MainContainer = () => {
       <section className=" w-full my-6">
         <MenuContainer />
       </section>
+      
+      <CartContainer />
     </div>
   );
 };
