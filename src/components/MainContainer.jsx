@@ -6,6 +6,7 @@ import { RowContainer } from "./RowContainer";
 import { useStateValue } from "./context/StateProvider";
 import { useState } from "react";
 import { useEffect } from "react";
+import { MenuContainer } from "./MenuContainer";
 
 export const MainContainer = () => {
   const [{ foodItems }, dispatch] = useStateValue();
@@ -16,14 +17,14 @@ export const MainContainer = () => {
   return (
     <div className=" w-full h-auto flex-col items-center justify-center">
       <HomeContainer />
+
       <section className=" w-full my-6">
         <div className=" w-full flex items-center justify-between">
           <p
             className=" text-2xl font-semibold capitalize text-headingColor relative before:absolute before:rounded-lg before:content 
-          before:w-32 before:h-1 before:bottom-0 before:left-0 before:bg-gradient-to-tr from-orange-400 to-orange-600 transition-all 
-          ease-in-out duration-100"
+          before:w-32 before:h-1 before:bottom-0 before:left-0 before:bg-gradient-to-tr from-orange-400 to-orange-600"
           >
-            Nos fruits frais et healthy
+            Nos fruits frais & healthy
           </p>
 
           <div className=" hidden md:flex gap-3 items-center">
@@ -50,6 +51,10 @@ export const MainContainer = () => {
           data={foodItems?.filter((n) => n.category === "fruits")}
           scrollValue={scrollValue}
         />
+      </section>
+
+      <section className=" w-full my-6">
+        <MenuContainer />
       </section>
     </div>
   );

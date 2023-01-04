@@ -24,7 +24,7 @@ export const RowContainer = ({ flag, data, scrollValue }) => {
         data.map((item) => (
           <div
             key={item.id}
-            className=" w-300 min-w-[300px] md:w-340 md:min-w-[340px] h-[225px] my-12 bg-cardOverlay rounded-lg p-2 
+            className=" w-300 min-w-[300px] md:w-300 md:min-w-[300px] h-[275px] my-12 bg-cardOverlay rounded-lg p-2 
               backdrop-blur-lg hover:drop-shadow-lg flex flex-col justify-between"
           >
             <div className=" w-full flex items-center justify-between">
