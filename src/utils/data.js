@@ -7,16 +7,16 @@ import Fi1 from "../img/fi1.png";
 export const heroData = [
   {
     id: 1,
-    name: "Glace",
+    name: "Glaces",
     decp: "Chocolat & vanille",
-    price: "3.5",
+    price: "4.5",
     imageSrc: I1,
   },
   {
     id: 2,
-    name: "Fraise",
-    decp: "Fraise des bois",
-    price: "9.95",
+    name: "Fraises",
+    decp: "Fraises des bois",
+    price: "7.5",
     imageSrc: F1,
   },
   {
@@ -28,7 +28,7 @@ export const heroData = [
   },
   {
     id: 4,
-    name: "Poisson",
+    name: "Poissons",
     decp: "Assiette de poisson",
     price: "6.75",
     imageSrc: Fi1,

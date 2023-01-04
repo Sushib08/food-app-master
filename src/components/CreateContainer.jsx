@@ -6,7 +6,7 @@ import {
   MdCloudUpload,
   MdDelete,
   MdFoodBank,
-  MdAttachMoney,
+  MdEuroSymbol,
 } from "react-icons/md";
 import { categories } from "../utils/data";
 import Loader from "./Loader";
@@ -262,7 +262,7 @@ export const CreateContainer = () => {
           </div>
 
           <div className=" w-full py-2 border-b border-gray-300 flex items-center gap-2">
-            <MdAttachMoney className=" text-gray-700 text-2xl" />
+            <MdEuroSymbol className=" text-gray-700 text-2xl" />
             <input
               type="text"
               required
