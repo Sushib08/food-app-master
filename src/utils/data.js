@@ -16,7 +16,7 @@ export const heroData = [
   {
     id: 1,
     name: "Glaces",
-    decp: "Chocolat & vanille",
+    decp: "Glace au chocolat",
     price: "4.5",
     imageSrc: I1,
   },
@@ -30,14 +30,14 @@ export const heroData = [
   {
     id: 3,
     name: "Chicken Kebab",
-    decp: "Assiette de Kebab",
+    decp: "Farandole de poulet",
     price: "8.5",
     imageSrc: C3,
   },
   {
     id: 4,
     name: "Poissons",
-    decp: "Assiette de poisson",
+    decp: "Plat de fruits de mer",
     price: "6.75",
     imageSrc: Fi1,
   },
