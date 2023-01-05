@@ -5,12 +5,13 @@ import { categories } from "../utils/data";
 import { motion } from "framer-motion";
 import { RowContainer } from "./RowContainer";
 import { useStateValue } from "./context/StateProvider";
+import { CartContainer } from "./CartContainer";
 
 export const MenuContainer = () => {
   const [filter, setFilter] = useState("chicken");
-  const [{ foodItems }, dispatch] = useStateValue("chicken");
+  const [{ foodItems, cartShow }, dispatch] = useStateValue("chicken");
 
-  useEffect(() => {}, [filter]);
+  useEffect(() => {}, [filter, cartShow]);
 
   return (
     <section className=" w-full my-6" id="menu">
@@ -69,6 +70,7 @@ export const MenuContainer = () => {
             <RowContainer flag={false} data={foodItems?.filter((n) => n.category == filter)} />
         </div>
       </div>
+      {cartShow && <CartContainer />}
     </section>
   );
 };

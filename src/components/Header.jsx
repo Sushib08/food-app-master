@@ -12,7 +12,7 @@ import { actionType } from "./context/reducer";
 export const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
-  const [{ user, cartShow }, dispatch] = useStateValue();
+  const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
 
   const [isMenu, setIsMenu] = useState(false);
 
@@ -66,42 +66,55 @@ export const Header = () => {
             exit={{ opacity: 0, x: 200 }}
             className=" flex items-center gap-8"
           >
-            <li
-              className=" text-base text-textColor hover:text-headingColor 
+            <Link to={"/"}>
+              {" "}
+              <li
+                className=" text-base text-textColor hover:text-headingColor 
             duration-100 transition-all ease-in-out cursor-pointer"
-            >
-              Home
-            </li>
-            <li
-              className=" text-base text-textColor hover:text-headingColor 
+              >
+                Home
+              </li>
+            </Link>
+            <Link to={"/menu"}>
+              <li
+                className=" text-base text-textColor hover:text-headingColor 
             duration-100 transition-all ease-in-out cursor-pointer"
-            >
-              Menu
-            </li>
+              >
+                Menu
+              </li>
+            </Link>
+            <Link to={"/aPropos"}>
             <li
               className=" text-base text-textColor hover:text-headingColor 
             duration-100 transition-all ease-in-out cursor-pointer"
             >
               A propos de nous
             </li>
+            </Link>
+            <Link to={"/aPropos"}>
             <li
               className=" text-base text-textColor hover:text-headingColor 
             duration-100 transition-all ease-in-out cursor-pointer"
             >
-              Service
+             Service
             </li>
+            </Link>
           </motion.ul>
           <div
             className=" relative flex items-center justify-center"
             onClick={showCart}
           >
             <MdShoppingBasket className=" text-textColor text-2xl cursor-pointer" />
-            <div
-              className=" absolute -top-2 -right-2 w-6 h-6 rounded-full 
-            bg-cartNumBg flex items-center justify-center"
-            >
-              <p className=" text-xs text-white font-semibold">5</p>
-            </div>
+            {cartItems && cartItems.length > 0 && (
+              <div
+                className=" absolute -top-2 -right-2 w-6 h-6 rounded-full 
+         bg-cartNumBg flex items-center justify-center"
+              >
+                <p className=" text-xs text-white font-semibold">
+                  {cartItems.length}
+                </p>
+              </div>
+            )}
           </div>
 
           <div className=" relative ">
@@ -153,12 +166,16 @@ export const Header = () => {
           onClick={showCart}
         >
           <MdShoppingBasket className=" text-textColor text-2xl cursor-pointer" />
-          <div
-            className=" absolute -top-2 -right-2 w-6 h-6 rounded-full 
-          bg-cartNumBg flex items-center justify-center"
-          >
-            <p className=" text-xs text-white font-semibold">5</p>
-          </div>
+          {cartItems && cartItems.length > 0 && (
+            <div
+              className=" absolute -top-2 -right-2 w-6 h-6 rounded-full 
+         bg-cartNumBg flex items-center justify-center"
+            >
+              <p className=" text-xs text-white font-semibold">
+                {cartItems.length}
+              </p>
+            </div>
+          )}
         </div>
 
         <Link to={"/"} className=" flex items-center gap-2">
