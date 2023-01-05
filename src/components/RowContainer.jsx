@@ -3,7 +3,7 @@ import { MdShoppingBasket } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useRef } from "react";
-import NotFound from '../img/NotFound.svg'
+import NotFound from "../img/NotFound.svg";
 
 export const RowContainer = ({ flag, data, scrollValue }) => {
   const rowContainer = useRef();
@@ -21,7 +21,7 @@ export const RowContainer = ({ flag, data, scrollValue }) => {
           : "overflow-x-hidden flex-wrap justify-center"
       }`}
     >
-      {data && data.length > 0 ?
+      {data && data.length > 0 ? (
         data.map((item) => (
           <div
             key={item.id}
@@ -55,13 +55,21 @@ export const RowContainer = ({ flag, data, scrollValue }) => {
               <p className=" mt-1 text-sm text-gray-500">{item?.calories}</p>
               <div className=" flex items-center gap-8">
                 <p className=" text-lg text-headingColor font-semibold">
-                  <span className=" text-sm text-red-500">€</span> {item?.price}
+                  {item?.price}{" "}
+                  <span className=" text-sm text-red-500"> €</span>
                 </p>
               </div>
             </div>
           </div>
-        )): <div className=" w-full flex flex-col items-center justify-center"><img src={NotFound} alt='not found' className=" h-340" />
-        <p className=" text-xl text-headingColor font-semibold my-2">Le plat n'est pas disponible</p></div>}
+        ))
+      ) : (
+        <div className=" w-full flex flex-col items-center justify-center">
+          <img src={NotFound} alt="not found" className=" h-340" />
+          <p className=" text-xl text-headingColor font-semibold my-2">
+            Le plat n'est pas disponible
+          </p>
+        </div>
+      )}
     </div>
   );
 };

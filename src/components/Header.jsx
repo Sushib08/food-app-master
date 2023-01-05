@@ -12,7 +12,7 @@ import { actionType } from "./context/reducer";
 export const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, cartShow }, dispatch] = useStateValue();
 
   const [isMenu, setIsMenu] = useState(false);
 
@@ -38,6 +38,13 @@ export const Header = () => {
     dispatch({
       type: actionType.SET_USER,
       user: null,
+    });
+  };
+
+  const showCart = () => {
+    dispatch({
+      type: actionType.SET_CART_SHOW,
+      cartShow: !cartShow,
     });
   };
 
@@ -84,7 +91,10 @@ export const Header = () => {
               Service
             </li>
           </motion.ul>
-          <div className=" relative flex items-center justify-center">
+          <div
+            className=" relative flex items-center justify-center"
+            onClick={showCart}
+          >
             <MdShoppingBasket className=" text-textColor text-2xl cursor-pointer" />
             <div
               className=" absolute -top-2 -right-2 w-6 h-6 rounded-full 
@@ -138,7 +148,10 @@ export const Header = () => {
 
       {/* mobile */}
       <div className=" flex items-center justify-between md:hidden w-full h-full">
-        <div className=" relative flex items-center justify-center">
+        <div
+          className=" relative flex items-center justify-center"
+          onClick={showCart}
+        >
           <MdShoppingBasket className=" text-textColor text-2xl cursor-pointer" />
           <div
             className=" absolute -top-2 -right-2 w-6 h-6 rounded-full 
@@ -186,7 +199,7 @@ export const Header = () => {
                   className=" text-base text-textColor  hover:bg-slate-200 
                 hover:text-headingColor duration-100 transition-all ease-in-out 
                 cursor-pointer"
-                onClick={() => setIsMenu(false)}
+                  onClick={() => setIsMenu(false)}
                 >
                   Home
                 </li>
@@ -194,7 +207,7 @@ export const Header = () => {
                   className=" text-base text-textColor  hover:bg-slate-200 
                 hover:text-headingColor duration-100 transition-all ease-in-out 
                 cursor-pointer"
-                onClick={() => setIsMenu(false)}
+                  onClick={() => setIsMenu(false)}
                 >
                   Menu
                 </li>
@@ -202,7 +215,7 @@ export const Header = () => {
                   className=" text-base text-textColor  hover:bg-slate-200 
                 hover:text-headingColor duration-100 transition-all ease-in-out 
                 cursor-pointer"
-                onClick={() => setIsMenu(false)}
+                  onClick={() => setIsMenu(false)}
                 >
                   A propos de nous
                 </li>
@@ -210,7 +223,7 @@ export const Header = () => {
                   className=" text-base text-textColor  hover:bg-slate-200 
                 hover:text-headingColor duration-100 transition-all ease-in-out 
                 cursor-pointer"
-                onClick={() => setIsMenu(false)}
+                  onClick={() => setIsMenu(false)}
                 >
                   Service
                 </li>
